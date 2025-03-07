@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "Github",
+  "description": "DIaler for Apollo calls via Twilio Voice",
+  "version": "1.0.0",
+  "permissions": ["sidePanel", "tabs"],
+  "side_panel": {
+    "default_path": "index.html"
+  },
+  "background": {
+    "service_worker": "serviceWorker.ts"
+  }
+}
