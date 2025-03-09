@@ -3,6 +3,7 @@ import * as ReactDOM from 'react-dom/client';
 import App from './App';
 import antdTheme from './utils/antd/antd-theme';
 import { ConfigProvider } from 'antd';
+import { HashRouter } from 'react-router';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -11,7 +12,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <StrictMode>
     <ConfigProvider theme={antdTheme}>
-      <App />
+      <HashRouter>
+        <App />
+      </HashRouter>
     </ConfigProvider>
   </StrictMode>
 );
