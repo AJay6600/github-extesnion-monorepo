@@ -1,3 +1,10 @@
+import { Route, Routes } from 'react-router';
+import Home from './pages/Home';
+
 export default function App() {
-  return <h1>Welcome to Github extesnion</h1>;
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+    </Routes>
+  );
 }
