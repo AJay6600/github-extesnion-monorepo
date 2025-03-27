@@ -1,18 +1,23 @@
-/**
- * This is not a production server yet!
- * This is only a minimal backend to get started.
- */
-
 import express from 'express';
+import cors from 'cors';
+import authHandler from './authHandler';
 
 const app = express();
 
-app.get('/api', (req, res) => {
-  res.send({ message: 'Welcome to backend!' });
+app.use(cors());
+// parse application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: false }));
+// parse application/json
+app.use(express.json());
+
+/** Route for authentication using github Oauth */
+app.use('/auth', authHandler);
+
+/** Port for backend */
+const port = process.env.PORT || 3333;
+
+const server = app.listen(port, () => {
+  console.log(`Listening at http://localhost:${port}`);
 });
 
-const port = process.env.PORT || 3333;
-const server = app.listen(port, () => {
-  console.log(`Listening at http://localhost:${port}/api`);
-});
 server.on('error', console.error);
