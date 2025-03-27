@@ -21,6 +21,9 @@ module.exports = {
       grey: {
         DEFAULT: 'var(--color-grey)',
       },
+      error: {
+        DEFAULT: 'var(--color-error)',
+      },
     },
   },
 };

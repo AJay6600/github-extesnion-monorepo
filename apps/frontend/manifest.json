@@ -3,7 +3,7 @@
   "name": "Github",
   "description": "DIaler for Apollo calls via Twilio Voice",
   "version": "1.0.0",
-  "permissions": ["sidePanel", "tabs"],
+  "permissions": ["sidePanel", "tabs", "identity", "identity.email", "storage"],
   "side_panel": {
     "default_path": "index.html"
   },
