@@ -14,7 +14,11 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@github-extension-monorepo/typescript": [
+        "libs/shared/typescript/src/index.ts"
+      ]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

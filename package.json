@@ -5,6 +5,8 @@
   "scripts": {},
   "private": true,
   "devDependencies": {
+    "@babel/core": "^7.14.5",
+    "@babel/preset-react": "^7.14.5",
     "@eslint/js": "^9.8.0",
     "@nx/eslint": "20.5.0",
     "@nx/eslint-plugin": "20.5.0",
@@ -50,13 +52,16 @@
     "tslib": "^2.3.0",
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.19.0",
+    "verdaccio": "^6.0.5",
     "vite": "^6.0.0",
+    "vite-plugin-dts": "~4.5.0",
     "vitest": "^3.0.0",
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
     "@crxjs/vite-plugin": "2.0.0-beta.21",
     "@nrwl/express": "^19.8.4",
+    "@nrwl/react": "^19.8.4",
     "@types/chrome": "^0.0.312",
     "antd": "^5.24.3",
     "axios": "^1.6.0",
@@ -67,5 +72,8 @@
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-router": "^7.3.0"
+  },
+  "nx": {
+    "includedScripts": []
   }
 }
