@@ -22,6 +22,9 @@ module.exports = {
       grey: {
         DEFAULT: 'var(--color-grey)',
       },
+      error: {
+        DEFAULT: 'var(--color-error)',
+      },
       label: {
         DEFAULT: 'var(--color-label)',
       },
