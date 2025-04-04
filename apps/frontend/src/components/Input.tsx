@@ -31,7 +31,10 @@ type InputPropsType = {
     'onChange' | 'value' | 'onBlur' | 'ref'
   >;
   /** Function to be called on onBlur if we want any custom logic, in addition to rhfOnBlur*/
-  onBlur?: React.FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+  onBlur?: (
+    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>,
+    value: string
+  ) => void;
 };
 
 export const Input = ({
@@ -85,8 +88,9 @@ export const Input = ({
       </Tooltip>
     ),
     onBlur: (e) => {
+      const inputValue = e.target.value; // Get the input value
       if (onBlur) {
-        onBlur(e);
+        onBlur(e, inputValue); // Pass input value to onBlur function
       }
       rhfOnBlur();
     },

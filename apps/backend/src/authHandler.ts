@@ -1,5 +1,6 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { Router } from 'express';
+import handleGithubApiErrors from './utils/helpers/handleGithubApiError';
 
 const router = Router();
 
@@ -42,11 +43,13 @@ router.post('/github/token', async (req, res) => {
     /** Send the JWT token to the frontend */
     return res.status(200).json({ token: access_token });
   } catch (error) {
-    const err = error as Error;
+    const err = error as Error | AxiosError;
 
-    return res
-      .status(500)
-      .json({ message: `Failed to access the access token : ${err.message}` });
+    return res.status(500).json({
+      message: `Failed to access the access token : ${handleGithubApiErrors(
+        err
+      )}`,
+    });
   }
 });
 
