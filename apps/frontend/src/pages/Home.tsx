@@ -1,4 +1,4 @@
-import { message, Spin } from 'antd';
+import { Col, message, Row } from 'antd';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import {
@@ -8,7 +8,7 @@ import {
 import { logger } from '../utils/helpers/logger';
 import LoadingIndicator from '../components/LoadingIndicator';
 import ErrorIndicator from '../components/ErrorIndicator';
-import { throws } from 'assert';
+import GetRepoForm from '../forms/GetRepoForm';
 
 const Home = () => {
   /** This state handles the loading of authentication */
@@ -91,7 +91,13 @@ const Home = () => {
     return <ErrorIndicator error={isAuthError} />;
   }
 
-  return <div>Home</div>;
+  return (
+    <Row justify="center" align="middle" className="h-[100vh]">
+      <Col>
+        <GetRepoForm />
+      </Col>
+    </Row>
+  );
 };
 
 export default Home;

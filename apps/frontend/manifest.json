@@ -6,8 +6,5 @@
   "permissions": ["sidePanel", "tabs", "identity", "identity.email", "storage"],
   "side_panel": {
     "default_path": "index.html"
-  },
-  "background": {
-    "service_worker": "serviceWorker.ts"
   }
 }

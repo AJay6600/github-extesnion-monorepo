@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import authHandler from './authHandler';
+import userHandler from './user-handler';
 
 const app = express();
 
@@ -12,6 +13,9 @@ app.use(express.json());
 
 /** Route for authentication using github Oauth */
 app.use('/auth', authHandler);
+
+/** Route for user */
+app.use('/user', userHandler);
 
 /** Port for backend */
 const port = process.env.PORT || 3333;
