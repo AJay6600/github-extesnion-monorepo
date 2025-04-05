@@ -3,7 +3,6 @@ import { FormItem } from '../components/FormItem';
 import { Input } from '../components/Input';
 import { Avatar, Button, Card, Col, Row, Image, message, Modal } from 'antd';
 import { FaGithub } from 'react-icons/fa';
-import axios from 'axios';
 import { useState } from 'react';
 import {
   GetAvatarResponseType,
@@ -14,18 +13,27 @@ import { getSessionStorageItem } from '../utils/helpers/getSessionFunc';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Select } from '../components/Select';
+import { useAppData } from '../contexts/AppContext';
+import axios from 'axios';
+import { useNavigate } from 'react-router';
 
+/** Type for the get repo form */
 type GetRepoFormType = {
   userName: string;
   repoName: string;
 };
 
+/** Form validation schema */
 const validationSchema = yup.object({
   userName: yup.string().required('Username is required'),
   repoName: yup.string().required('Repo name is required'),
 });
 
 const GetRepoForm = () => {
+  const navigate = useNavigate();
+
+  const { setRepoResponse, setCommitResponse } = useAppData();
+
   /** This state store the avatar url */
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
 
@@ -41,7 +49,6 @@ const GetRepoForm = () => {
   const [modalMessage, setModalMessage] = useState<string>();
 
   const {
-    reset,
     handleSubmit,
     control,
     formState: { errors },
@@ -53,8 +60,73 @@ const GetRepoForm = () => {
     mode: 'onChange',
   });
 
-  const submitHandler = () => {
-    console.log('Form Submitted');
+  /** This function handle the submission of form */
+  const submitHandler = async (formData: GetRepoFormType) => {
+    /** Update the repoResponse context */
+    setRepoResponse(reposOption);
+
+    /** set the commitResponseType as null initially */
+    setCommitResponse(null);
+
+    /** retrieve the repo api url from response */
+    const selectedRepo = (
+      reposOption && Array.isArray(reposOption) && reposOption.length > 0
+        ? reposOption.filter((repo) => repo.id.toString() === formData.repoName)
+        : []
+    ) as GetRepoResponseType[];
+
+    /** Select repo api link */
+    const repoLink = selectedRepo && selectedRepo[0].apiUrl;
+
+    try {
+      /** Response data */
+      const { data } = await axios.post(
+        `${import.meta.env.VITE_BACKEND_ENDPOINT}/user/commits`,
+        {
+          repoLink,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${await getSessionStorageItem('token')}`,
+          },
+        }
+      );
+
+      /**
+       * if the commit data is preset , update the commitRepoResponse context
+       * if there is not commits, show the no commit found modal and reset the form
+       */
+      if (data && Array.isArray(data) && data.length > 0) {
+        /** Update the commit response context */
+        setCommitResponse(data);
+        /** navigate to home page */
+        navigate('/home', { state: { selectedRepoId: formData.repoName } });
+      } else if (data['message'] === 'No commit found') {
+        setModalMessage(`The ${selectedRepo[0].name} has no commits`);
+        setIsModalOpen(true);
+        setCommitResponse(null);
+      }
+    } catch (error) {
+      const err = error as Error;
+
+      /**
+       * If the error is showing git Repository is empty then show the message
+       * it is not logical error
+       */
+      if (
+        axios.isAxiosError(error) &&
+        error.response &&
+        error.response.data &&
+        error.response.data['message'] === 'Git Repository is empty.'
+      ) {
+        setModalMessage(error.response.data['message']);
+        setIsModalOpen(true);
+      } else {
+        logger(err);
+        message.error(err.message);
+      }
+      setCommitResponse(null);
+    }
   };
 
   return (
@@ -67,9 +139,6 @@ const GetRepoForm = () => {
           <Button
             type="primary"
             onClick={() => {
-              reset();
-              setAvatarUrl(null);
-              setReposOption(null);
               setIsModalOpen(false);
             }}
           >
@@ -158,6 +227,7 @@ const GetRepoForm = () => {
                       ) {
                         setModalMessage('The user has no repositories');
                         setIsModalOpen(true);
+                        setRepoResponse(null);
                       }
                     } catch (error) {
                       setReposOption(null);

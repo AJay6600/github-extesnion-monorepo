@@ -10,3 +10,12 @@ export type GetRepoResponseType = {
   htmlUrl: string;
   apiUrl: string;
 };
+
+/** Response type for get all commit */
+export type GetAllCommitResponseType = {
+  sha: string;
+  message: string;
+  url: string;
+  htmlUrl: string;
+  date: Date;
+};
