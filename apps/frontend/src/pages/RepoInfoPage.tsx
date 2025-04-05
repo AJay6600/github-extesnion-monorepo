@@ -10,7 +10,7 @@ import LoadingIndicator from '../components/LoadingIndicator';
 import ErrorIndicator from '../components/ErrorIndicator';
 import GetRepoForm from '../forms/GetRepoForm';
 
-const Home = () => {
+const RepoInfoPage = () => {
   /** This state handles the loading of authentication */
   const [isAuthLoading, setIsAuthLoading] = useState<boolean>(false);
 
@@ -100,4 +100,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default RepoInfoPage;

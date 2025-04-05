@@ -15,6 +15,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Select } from '../components/Select';
 import { useAppData } from '../contexts/AppContext';
 import axios from 'axios';
+import { useNavigate } from 'react-router';
 
 /** Type for the get repo form */
 type GetRepoFormType = {
@@ -29,6 +30,8 @@ const validationSchema = yup.object({
 });
 
 const GetRepoForm = () => {
+  const navigate = useNavigate();
+
   const { setRepoResponse, setCommitResponse } = useAppData();
 
   /** This state store the avatar url */
@@ -96,6 +99,8 @@ const GetRepoForm = () => {
       if (data && Array.isArray(data) && data.length > 0) {
         /** Update the commit response context */
         setCommitResponse(data);
+        /** navigate to home page */
+        navigate('/home', { state: { selectedRepoId: formData.repoName } });
       } else if (data['message'] === 'No commit found') {
         setModalMessage(`The ${selectedRepo[0].name} has no commits`);
         setIsModalOpen(true);
