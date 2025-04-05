@@ -2,7 +2,7 @@ import { Row, Spin } from 'antd';
 
 const LoadingIndicator = () => {
   return (
-    <Row justify="center" align="middle" style={{ height: '100vh' }}>
+    <Row justify="center" align="middle">
       <Spin size="large" />
     </Row>
   );

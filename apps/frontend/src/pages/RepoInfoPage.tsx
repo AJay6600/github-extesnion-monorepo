@@ -92,7 +92,7 @@ const RepoInfoPage = () => {
   }
 
   return (
-    <Row justify="center" align="middle" className="h-[100vh]">
+    <Row justify="center" align="middle">
       <Col>
         <GetRepoForm />
       </Col>
