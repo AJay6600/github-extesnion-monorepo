@@ -11,6 +11,6 @@ router.get('/avatar/:username', isAuth, getAvatar);
 /** Get All repos  */
 router.get('/repos/:username', isAuth, getRepositories);
 /** Get all commits of Repo */
-router.get('/commits', isAuth, getAllCommits);
+router.post('/commits', isAuth, getAllCommits);
 
 export default router;
