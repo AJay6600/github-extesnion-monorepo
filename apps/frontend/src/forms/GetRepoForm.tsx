@@ -149,7 +149,7 @@ const GetRepoForm = () => {
         {modalMessage}
       </Modal>
 
-      <Card className="mx-2 shadow-sm">
+      <Card className="mx-2 shadow-lg">
         <form onSubmit={handleSubmit(submitHandler)}>
           <Row justify="center" align="middle" gutter={[0, 24]}>
             <Col span={24} className="text-center">
