@@ -12,11 +12,15 @@ type Props = {
 type AppContextType = {
   repoResponse: GetRepoResponseType[] | null;
   commitResponse: GetAllCommitResponseType[] | null;
+  selectedRepo: GetRepoResponseType | null;
   setRepoResponse: React.Dispatch<
     React.SetStateAction<GetRepoResponseType[] | null>
   >;
   setCommitResponse: React.Dispatch<
     React.SetStateAction<GetAllCommitResponseType[] | null>
+  >;
+  setSelectedRepo: React.Dispatch<
+    React.SetStateAction<GetRepoResponseType | null>
   >;
 };
 
@@ -24,10 +28,13 @@ type AppContextType = {
 const AppContext = React.createContext<AppContextType>({
   repoResponse: null,
   commitResponse: null,
+  selectedRepo: null,
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   setRepoResponse: () => {},
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   setCommitResponse: () => {},
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  setSelectedRepo: () => {},
 });
 
 /** react context provider */
@@ -42,14 +49,21 @@ export const AppContextProvider = ({ children }: Props) => {
     GetAllCommitResponseType[] | null
   >(null);
 
+  /** This state used to store selected repo id */
+  const [selectedRepo, setSelectedRepo] = useState<GetRepoResponseType | null>(
+    null
+  );
+
   const contextValues = useMemo(
     () => ({
       repoResponse,
       commitResponse,
+      selectedRepo,
       setRepoResponse,
       setCommitResponse,
+      setSelectedRepo,
     }),
-    [commitResponse, repoResponse]
+    [commitResponse, repoResponse, selectedRepo]
   );
 
   /** react context provider */

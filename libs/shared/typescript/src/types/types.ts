@@ -9,6 +9,7 @@ export type GetRepoResponseType = {
   name: string;
   htmlUrl: string;
   apiUrl: string;
+  description: string;
 };
 
 /** Response type for get all commit */
