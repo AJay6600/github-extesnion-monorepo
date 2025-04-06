@@ -1,5 +1,6 @@
 import { Col, Layout, Row, Typography } from 'antd';
 import { Outlet, useLocation } from 'react-router';
+import HomePageHeader from './HomePageHeader';
 
 const { Header, Content } = Layout;
 
@@ -22,6 +23,10 @@ const AppLayout = () => {
         </Row>
       );
     }
+
+    if (location.pathname === '/home') {
+      return <HomePageHeader />;
+    }
   };
 
   return (
@@ -32,7 +37,7 @@ const AppLayout = () => {
       </Header>
 
       {/* Content */}
-      <Content className="h-[85%] flex justify-center align-middle bg-white rounded-t-[25px] shadow-[0px_-1px_2px_0px_white] -mt-6 z-10 relative">
+      <Content className="h-[85%] flex justify-center align-middle bg-white rounded-t-[25px] shadow-[0px_-1px_2px_0px_white] -mt-4 z-10 relative">
         <Outlet />
       </Content>
     </Layout>

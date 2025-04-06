@@ -48,6 +48,7 @@ const reqHandler: RequestHandler<GetAvatarParamArgs> = async (
         name: repo['name'],
         htmlUrl: repo['html_url'],
         apiUrl: repo['url'],
+        description: repo['description'],
       }));
 
       return res.status(200).json(repoData);

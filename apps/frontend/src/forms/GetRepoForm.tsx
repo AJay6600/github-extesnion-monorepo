@@ -32,7 +32,7 @@ const validationSchema = yup.object({
 const GetRepoForm = () => {
   const navigate = useNavigate();
 
-  const { setRepoResponse, setCommitResponse } = useAppData();
+  const { setRepoResponse, setCommitResponse, setSelectedRepo } = useAppData();
 
   /** This state store the avatar url */
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
@@ -99,6 +99,8 @@ const GetRepoForm = () => {
       if (data && Array.isArray(data) && data.length > 0) {
         /** Update the commit response context */
         setCommitResponse(data);
+        /** Update the selected repo id */
+        setSelectedRepo(selectedRepo[0]);
         /** navigate to home page */
         navigate('/home', { state: { selectedRepoId: formData.repoName } });
       } else if (data['message'] === 'No commit found') {
@@ -179,6 +181,8 @@ const GetRepoForm = () => {
                   onChange={async (value) => {
                     setAvatarUrl(null);
                     setReposOption(null);
+                    setCommitResponse(null);
+                    setSelectedRepo(null);
 
                     try {
                       const response = await axios.get(
@@ -227,7 +231,9 @@ const GetRepoForm = () => {
                       ) {
                         setModalMessage('The user has no repositories');
                         setIsModalOpen(true);
+                        setCommitResponse(null);
                         setRepoResponse(null);
+                        setSelectedRepo(null);
                       }
                     } catch (error) {
                       setReposOption(null);
@@ -258,6 +264,9 @@ const GetRepoForm = () => {
                       : []
                   }
                   antdSelectProps={{ disabled: !reposOption }}
+                  onChange={() => {
+                    setSelectedRepo(null);
+                  }}
                 />
               </FormItem>
             </Col>
